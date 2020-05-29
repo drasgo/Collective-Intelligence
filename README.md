@@ -3,7 +3,7 @@ This repository containts the practical materials for the Embodied Artificial In
 
 ## The repository
 - The code is located in the folder `swarm modeling`
-  - The file [CodeTutorial](CodeTutorial.pdf) contains a detailed description of the code 
+  - The file [CodeTutorial](CodeTutorial.pdf) contains a detailed description of the code
 - The assignments are located in the folder `assignments`
 
 ## Technical requirements
@@ -11,8 +11,8 @@ This repository containts the practical materials for the Embodied Artificial In
 - Install the [Pygame] package.
 - Install Numpy.
 
-## Examples 
+## Examples
 For the first week assignment we have provided you with a 'desired' outcome example as an insipiration for your own work:
-
+![Output sample](examples/flocking.mp4)
 
 [Pygame]: https://www.pygame.org/wiki/GettingStarted
