@@ -1,2 +1,4 @@
 #untrack folders
 .idea/
+# Ignore Documentation folder
+html/
