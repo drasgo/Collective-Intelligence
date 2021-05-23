@@ -1,7 +1,7 @@
-import numpy
+# import numpy
 import pygame
 
-from simulation.agent import Agent
+# from simulation.agent import Agent
 from simulation.helperfunctions import dist
 from simulation.objects import Objects
 
@@ -12,7 +12,7 @@ General swarm class that defines general swarm properties, which are common acro
 # superclass
 class Swarm(pygame.sprite.Sprite):
     """ """
-    def __init__(self, screen_size, plot=None):
+    def __init__(self, screen_size, plot=None) -> None:
         super(Swarm, self).__init__()
         self.dist_temp = {}
         self.agents = []
@@ -21,15 +21,21 @@ class Swarm(pygame.sprite.Sprite):
         self.points_to_plot = plot
         self.datapoints = []
 
-    def add_agent(self, agent):
+    def add_agent(self, agent) -> None:
         """
 
-        :param agent:
+        :param agent: 
 
         """
         self.agents.append(agent)
 
-    def compute_distance(self, a, b):
+    def compute_distance(self, a, b) -> float:
+        """
+
+        :param a: 
+        :param b: 
+
+        """
         indexes = (a.index, b.index)
         pair = (min(indexes), max(indexes))
 
@@ -40,20 +46,25 @@ class Swarm(pygame.sprite.Sprite):
     def find_neighbors(self, agent, radius):
         """
 
-        :param agent:
-        :param radius:
+        :param agent: param radius:
+        :param radius: 
 
         """
-        neighbors = []
+        #  Slight improvement like that
+        return [neighbor for neighbor in self.agents if
+                agent is not neighbor and
+                neighbor.type in [None, "I"] and
+                self.compute_distance(agent, neighbor) < radius]
+        # neighbors = []
+        #
+        # for neighbor in self.agents:
+        #     if agent != neighbor and \
+        #             (neighbor.type in [None, "I"]) and \
+        #              self.compute_distance(agent, neighbor) < radius:  #TODO: one of the two performance problems is here: how much time it takes to compute the euclidean distance between the two "vectors"
+        #            neighbors.append(neighbor)
+        # return neighbors
 
-        for neighbor in self.agents:
-            if agent != neighbor and \
-                    (neighbor.type in [None, "I"]) and \
-                     self.compute_distance(agent, neighbor) < radius:  #TODO: one of the two performance problems is here: how much time it takes to compute the euclidean distance between the two "vectors"
-                   neighbors.append(neighbor)
-        return neighbors
-
-    def remain_in_screen(self):
+    def remain_in_screen(self) -> None:
         """ """
         for agent in self.agents:
             if agent.pos[0] > self.screen[0]:
@@ -66,10 +77,10 @@ class Swarm(pygame.sprite.Sprite):
                 agent.pos[1] = 0.0
 
     # plotting the number of infected and recovered
-    def add_point(self, lst):
+    def add_point(self, lst) -> None:
         """
 
-        :param lst:
+        :param lst: 
 
         """
         # Count current numbers
@@ -80,7 +91,7 @@ class Swarm(pygame.sprite.Sprite):
         for x in values:
             self.points_to_plot[x].append(values[x])
 
-    def update(self):
+    def update(self) -> None:
         """ """
         # update the movement
         self.datapoints = []
@@ -91,10 +102,10 @@ class Swarm(pygame.sprite.Sprite):
             self.add_point(self.datapoints)
         self.remain_in_screen()
 
-    def display(self, screen: pygame.Surface):
+    def display(self, screen: pygame.Surface) -> None:
         """
 
-        :param screen:
+        :param screen: pygame.Surface:
 
         """
         for obstacle in self.objects.obstacles:

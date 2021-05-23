@@ -1,4 +1,6 @@
 import numpy as np
+from typing import List
+
 import random
 import pygame
 from simulation import helperfunctions
@@ -24,7 +26,7 @@ class Agent(pygame.sprite.Sprite):  # super class
         height=None,
         dT=None,
         index: int=None
-    ):
+    ) -> None:
         super(Agent, self).__init__()
         self.index = index
         self.image_file = image
@@ -56,12 +58,12 @@ class Agent(pygame.sprite.Sprite):  # super class
         self.type = None
 
     @property
-    def pos(self):
+    def pos(self) -> None:
         """ """
         return self._pos
 
     @pos.setter
-    def pos(self, pos):
+    def pos(self, pos) -> None:
         """
 
         :param pos: 
@@ -73,12 +75,12 @@ class Agent(pygame.sprite.Sprite):  # super class
         )  # update the rect position as thats actually displayed
 
     @property
-    def v(self):
+    def v(self) -> None:
         """ """
         return self._v
 
     @v.setter
-    def v(self, v):
+    def v(self, v) -> None:
         """
 
         :param v: 
@@ -88,7 +90,7 @@ class Agent(pygame.sprite.Sprite):  # super class
         if self.image_file:
             self._rotate_image()
 
-    def _rotate_image(self):
+    def _rotate_image(self) -> None:
         """Rotate base image using the velocity and assign to image."""
         angle = -np.rad2deg(
             np.angle(self.v[0] + 1j * self.v[1])
@@ -98,7 +100,7 @@ class Agent(pygame.sprite.Sprite):  # super class
         )  # rotates the image
         self.rect = self.image.get_rect(center=self.rect.center)
 
-    def set_velocity(self):
+    def set_velocity(self) -> List[int]:
         """ """
         angle = np.pi * (2 * np.random.rand() - 1)
         velocity = [
@@ -111,9 +113,9 @@ class Agent(pygame.sprite.Sprite):  # super class
     def wander(self, wander_dist, wander_radius, wander_angle):
         """Function to make the agents to perform random movement
 
-        :param wander_dist: 
-        :param wander_radius: 
+        :param wander_dist: param wander_radius:
         :param wander_angle: 
+        :param wander_radius: 
 
         """
         rands = 2 * np.random.rand() - 1
@@ -126,7 +128,7 @@ class Agent(pygame.sprite.Sprite):  # super class
         self.wandering_angle += wander_angle * rands
         return wander_force
 
-    def avoid_obstacle(self):
+    def avoid_obstacle(self) -> None:
         """Function to avoid obstacles
         need to take into account whether agents inside/outside the obstacle
         moves the agent away from the boarder by distance equivalent to its size
@@ -139,21 +141,21 @@ class Agent(pygame.sprite.Sprite):  # super class
         ) * helperfunctions.norm(self.v)
         self.pos += self.v * 1.5
 
-    def update(self):
+    def update(self) -> None:
         """ """
         self.v = helperfunctions.truncate(
             self.v + self.steering, self.max_speed, self.min_speed
         )
         self.pos += self.v * self.dT
 
-    def display(self, screen: pygame.Surface):
+    def display(self, screen: pygame.Surface) -> None:
         """
 
-        :param screen: 
+        :param screen: pygame.Surface:
 
         """
         screen.blit(self.image, self.rect)
 
-    def reset_frame(self):
+    def reset_frame(self) -> None:
         """ """
         self.steering = np.zeros(2)

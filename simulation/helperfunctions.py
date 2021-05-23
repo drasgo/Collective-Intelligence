@@ -1,18 +1,22 @@
 import numpy as np
+from typing import List
+
 import math
 import random
 import pygame
+from typing import Any, Mapping, Tuple
 
 """
 Useful vector transformation functions, and other to make the code more clear 
 """
 
 
-def area(a, b):
+def area(a, b: float):
     """
 
     :param a: object mid point
     :param b: scale
+    :param b: float: 
 
     """
     if b < a:
@@ -24,7 +28,7 @@ def area(a, b):
     return min, max
 
 
-def generate_coordinates(screensize):
+def generate_coordinates(screensize) -> List[float]:
     """
 
     :param screensize: 
@@ -36,7 +40,7 @@ def generate_coordinates(screensize):
     ]
 
 
-def dist(a, b):
+def dist(a, b) -> float:
     """return the distance between two vectors
 
     :param a: np.array
@@ -46,11 +50,12 @@ def dist(a, b):
     return norm(a - b)
 
 
-def image_with_rect(filename, scale):
+def image_with_rect(filename, scale: Mapping[int, Any]) -> Tuple[Any, Any]:
     """
 
-    :param filename: 
-    :param scale: 
+    :param filename: param scale:
+    :param scale: Mapping[int: 
+    :param Any]: 
 
     """
     _image = pygame.image.load(filename)
@@ -58,26 +63,28 @@ def image_with_rect(filename, scale):
     return _image, _image.get_rect()
 
 
-def randrange(a, b):
+def randrange(a, b) -> Any:
     """Random number between a and b.
 
-    :param a: 
+    :param a: param b:
     :param b: 
 
     """
     return a + np.random.random() * (b - a)
 
 
-def plusminus():
+def plusminus() -> int:
     """ """
     # random 1 or -1
     return 1 if (random.random() > 0.5) else -1
 
 
-def rotate(vector):
+def rotate(vector: Mapping[int, Any]) -> Any:
     """
 
     :param vector: 
+    :param vector: Mapping[int: 
+    :param Any]: 
 
     """
     new_vector = np.zeros(2)
@@ -89,7 +96,7 @@ def rotate(vector):
     return new_vector
 
 
-def normalize(vector):
+def normalize(vector) -> Any:
     """Function to normalize a vector
     ----------
     param vector : np.array
@@ -104,12 +111,12 @@ def normalize(vector):
         return np.array(vector) / n
 
 
-def truncate(vector, max_length, min_lenght=None):
+def truncate(vector, max_length, min_lenght=None) -> Any:
     """Truncate the length of a vector to a maximum/minimum value.
 
-    :param vector: 
+    :param vector: param max_length:
+    :param min_lenght: Default value = None)
     :param max_length: 
-    :param min_lenght:  (Default value = None)
 
     """
     n = norm(vector)
@@ -121,7 +128,7 @@ def truncate(vector, max_length, min_lenght=None):
         return vector
 
 
-def norm(vector):
+def norm(vector) -> float:
     """Compute the norm of a vector.
 
     :param vector: 
@@ -130,7 +137,7 @@ def norm(vector):
     return math.sqrt(vector[0] ** 2 + vector[1] ** 2)
 
 
-def speedvector(max_speed):
+def speedvector(max_speed) -> List[int]:
     """
 
     :param max_speed: 
@@ -142,10 +149,10 @@ def speedvector(max_speed):
     ]
 
 
-def relative(u, v):
+def relative(u, v) -> List[int]:
     """
 
-    :param u: 
+    :param u: param v:
     :param v: 
 
     """

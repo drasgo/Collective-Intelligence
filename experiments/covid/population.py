@@ -7,12 +7,16 @@ from experiments.covid import parameters as p
 
 class Population(Swarm):
     """ """
-    def __init__(self, screen_size):
+    def __init__(self, screen_size) -> None:
         super(Population, self).__init__(screen_size)
         # To do
 
-    def initialize(self, num_agents: int):
-        """ """
+    def initialize(self, num_agents: int) -> None:
+        """
+
+        :param num_agents: int: 
+
+        """
 
         # To Do
 

@@ -12,8 +12,8 @@ Specific boid properties and helperfunctions
 class Boid(Agent):
     """ """
     def __init__(
-        self, pos, v, flock, index, image="experiments/flocking/images/normal-boid.png"
-    ):
+        self, pos, v, flock, index: int, image: str="experiments/flocking/images/normal-boid.png"
+    ) -> None:
         super(Boid, self).__init__(
             pos,
             v,
@@ -29,7 +29,7 @@ class Boid(Agent):
 
         self.flock = flock
 
-    def update_actions(self):
+    def update_actions(self) -> None:
         """ """
 
         # avoid any obstacles in the environment
@@ -71,10 +71,9 @@ class Boid(Agent):
             cohesion_force = self.cohesion(pre_cohesion_force)
         #
         else:
-            align_force, cohesion_force, separate_force = (
+            align_force, cohesion_force = (
             np.zeros(2),
             np.zeros(2),
-            np.zeros(2)
         )
         return align_force, cohesion_force, separate_force
 

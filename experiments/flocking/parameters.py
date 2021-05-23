@@ -1,13 +1,14 @@
 """
 Parameter settings to be loaded in the model
 """
+from typing import List, Tuple
 
 """
 General settings (DO NOT CHANGE)
 """
 # screen settings
 S_WIDTH, S_HEIGHT = 1000, 1000
-SCREEN = (S_WIDTH, S_HEIGHT)
+SCREEN: Tuple[int, int] = (S_WIDTH, S_HEIGHT)
 
 # choose how long to run the simulation
 # -1 : infinite, N: finite
@@ -18,7 +19,7 @@ SWARM = "Flock"
 # define the number of agents
 N_AGENTS = 300
 # object location
-OBJECT_LOC = [S_WIDTH / 2.0, S_HEIGHT / 2.0]
+OBJECT_LOC: List[float] = [S_WIDTH / 2.0, S_HEIGHT / 2.0]
 CONVEX = True
 
 

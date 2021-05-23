@@ -9,17 +9,17 @@ General Object class to load images in the environment
 
 class Objects(pygame.sprite.Sprite):
     """ """
-    def __init__(self):
+    def __init__(self) -> None:
         super(Objects, self).__init__()
         self.obstacles = pygame.sprite.Group()
         self.sites = pygame.sprite.Group()
 
-    def add_object(self, file, pos, scale, type):
+    def add_object(self, file, pos, scale, type) -> None:
         """
 
-        :param file: 
+        :param file: param pos:
+        :param scale: param type:
         :param pos: 
-        :param scale: 
         :param type: 
 
         """
@@ -33,14 +33,14 @@ class Objects(pygame.sprite.Sprite):
 
 class Object(pygame.sprite.Sprite):
     """ """
-    def __init__(self, filename=None, pos=None, scale=None):
+    def __init__(self, filename=None, pos=None, scale=None) -> None:
         super(Object, self).__init__()
         self.image, self.rect = helperfunctions.image_with_rect(filename, scale)
         self.mask = pygame.mask.from_surface(self.image)
         self.pos = pos if pos is not None else np.zeros(2)
         self.rect = self.image.get_rect(center=self.pos)
 
-    def display(self, screen):
+    def display(self, screen) -> None:
         """
 
         :param screen: 

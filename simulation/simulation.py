@@ -14,9 +14,8 @@ General simulation pipeline, suitable for all experiments
 
 
 class Simulation:
-    """
-    This class represents the simulation of agents in a virtual space.
-
+    """This class represents the simulation of agents in a virtual space.
+    
     Methods:
     :method __init__:
     :method CovidPlot:
@@ -29,17 +28,6 @@ class Simulation:
     :method simulate:
     :method run:
 
-    Attributes:
-    :ivar screensize:
-    :ivar screen:
-    :ivar sim_background:
-    :ivar iter:
-    :ivar swarm_type:
-    :ivar num_agents:
-    :ivar swarm:
-    :ivar to_update:
-    :ivar to_display:
-    :ivar running:
 
     """
 
@@ -83,7 +71,7 @@ class Simulation:
         self.to_display = pygame.sprite.Group()
         self.running = True
 
-    def CovidPlot(self, data):
+    def CovidPlot(self, data) -> None:
         """
 
         :param data: 
@@ -103,15 +91,15 @@ class Simulation:
         fig.savefig(output_name)
         plt.show()
 
-    def FlockPlot(self):
+    def FlockPlot(self) -> None:
         """ """
         pass
 
-    def AggregationPlot(self):
+    def AggregationPlot(self) -> None:
         """ """
         pass
 
-    def plot_simulation(self):
+    def plot_simulation(self) -> None:
         """ """
         if self.swarm_type == "Covid":
             self.CovidPlot(self.swarm.points_to_plot)
@@ -131,7 +119,7 @@ class Simulation:
     #     """ """
     #     self.to_update.update()
 
-    def initialize(self):
+    def initialize(self) -> None:
         """ """
 
         # initialize a swarm type specific environment
@@ -143,7 +131,7 @@ class Simulation:
         # add all agents/objects to display
         # self.to_display = pygame.sprite.Group(self.to_update)
 
-    def simulate(self):
+    def simulate(self) -> None:
         """ """
         self.screen.fill(self.sim_background)
         for event in pygame.event.get():
@@ -157,7 +145,7 @@ class Simulation:
         # self.display()
         pygame.display.flip()
 
-    def run(self):
+    def run(self) -> None:
         """ """
         # initialize the environment and agent/obstacle positions
         self.initialize()

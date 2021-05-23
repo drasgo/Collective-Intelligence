@@ -11,14 +11,14 @@ Specific flock properties, and flocking environment definition
 
 class Flock(Swarm):  # also access methods from the super class Swarm
     """ """
-    def __init__(self, screen_size):
+    def __init__(self, screen_size) -> None:
         super(Flock, self).__init__(screen_size)
         self.object_loc = p.OUTSIDE
 
-    def initialize(self, num_agents: int):
+    def initialize(self, num_agents: int) -> None:
         """
 
-        :param num_agents:
+        :param num_agents: int:
 
         """
 
@@ -109,6 +109,12 @@ class Flock(Swarm):  # also access methods from the super class Swarm
     #     return separate / len(neighbors)
 
     def find_neighbor_velocity_center_separation(self, boid, neighbors):
+        """
+
+        :param boid: 
+        :param neighbors: 
+
+        """
         neighbor_sum_v, neighbor_sum_pos, separate = (
             np.zeros(2),
             np.zeros(2),
