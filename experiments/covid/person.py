@@ -6,4 +6,5 @@ from experiments.covid import parameters as p
 
 
 class Person(Agent):
+    """ """
     pass

@@ -1,70 +1,88 @@
+import numpy
 import pygame
-from simulation import helperfunctions
+
+from simulation.agent import Agent
+from simulation.helperfunctions import dist
 from simulation.objects import Objects
 
 """
 General swarm class that defines general swarm properties, which are common across different swarm types
 """
 
-#superclass
+# superclass
 class Swarm(pygame.sprite.Sprite):
-
-    def __init__(self,screen_size, plot=None):
-        super(Swarm,self).__init__()
-        self.agents = pygame.sprite.Group()
+    """ """
+    def __init__(self, screen_size, plot=None):
+        super(Swarm, self).__init__()
+        self.dist_temp = {}
+        self.agents = []
         self.screen = screen_size
         self.objects = Objects()
-        self.points_to_plot=plot
+        self.points_to_plot = plot
         self.datapoints = []
 
+    def add_agent(self, agent):
+        """
 
-    def add_agent(self,agent):
-        self.agents.add(agent)
+        :param agent:
+
+        """
+        self.agents.append(agent)
+
+    def compute_distance(self, a, b):
+        indexes = (a.index, b.index)
+        pair = (min(indexes), max(indexes))
+
+        if pair not in self.dist_temp:
+            self.dist_temp[pair] = dist(a.pos, b.pos)
+        return self.dist_temp[pair]
 
     def find_neighbors(self, agent, radius):
-        agents = list(self.agents).copy()
+        """
+
+        :param agent:
+        :param radius:
+
+        """
         neighbors = []
-        for j, neighbor in enumerate(agents):
-            if agent == neighbor:
-                continue
-            else:
-                try:
-                    type = neighbor.type
-                except:
-                    type = None
 
-            if type != None:
-                if type =='I' and helperfunctions.dist(agent.pos, neighbor.pos) < radius:
-                    neighbors.append(j)
-            elif helperfunctions.dist(agent.pos, neighbor.pos) < radius:
-                neighbors.append(j)
-
+        for neighbor in self.agents:
+            if agent != neighbor and \
+                    (neighbor.type in [None, "I"]) and \
+                     self.compute_distance(agent, neighbor) < radius:  #TODO: one of the two performance problems is here: how much time it takes to compute the euclidean distance between the two "vectors"
+                   neighbors.append(neighbor)
         return neighbors
 
     def remain_in_screen(self):
+        """ """
         for agent in self.agents:
             if agent.pos[0] > self.screen[0]:
-                agent.pos[0]=0.
+                agent.pos[0] = 0.0
             if agent.pos[0] < 0:
                 agent.pos[0] = float(self.screen[0])
             if agent.pos[1] < 0:
                 agent.pos[1] = float(self.screen[1])
             if agent.pos[1] > self.screen[1]:
-                agent.pos[1]=0.
+                agent.pos[1] = 0.0
 
     # plotting the number of infected and recovered
     def add_point(self, lst):
-        #Count current numbers
-        values = {'S':0, 'I':0, 'R':0}
+        """
+
+        :param lst:
+
+        """
+        # Count current numbers
+        values = {"S": 0, "I": 0, "R": 0}
         for state in lst:
             values[state] += 1
 
         for x in values:
             self.points_to_plot[x].append(values[x])
 
-
     def update(self):
-        #update the movement
+        """ """
+        # update the movement
         self.datapoints = []
         for agent in self.agents:
             agent.update_actions()
@@ -73,12 +91,12 @@ class Swarm(pygame.sprite.Sprite):
             self.add_point(self.datapoints)
         self.remain_in_screen()
 
-        #execute the update
-        for agent in self.agents:
-            agent.update()
+    def display(self, screen: pygame.Surface):
+        """
 
+        :param screen:
 
-    def display(self, screen):
+        """
         for obstacle in self.objects.obstacles:
             obstacle.display(screen)
 
@@ -86,7 +104,8 @@ class Swarm(pygame.sprite.Sprite):
             site.display(screen)
 
         for agent in self.agents:
+            agent.update()
             agent.display(screen)
-
-        for agent in self.agents:
             agent.reset_frame()
+
+        self.dist_temp = {}
