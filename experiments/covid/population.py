@@ -1,4 +1,3 @@
-import numpy as np
 from simulation.swarm import Swarm
 from simulation import helperfunctions
 from experiments.covid.person import Person
@@ -6,15 +5,15 @@ from experiments.covid import parameters as p
 
 
 class Population(Swarm):
-    """ """
+    """Class that represents the Population for the Covid experiment. TODO"""
     def __init__(self, screen_size) -> None:
         super(Population, self).__init__(screen_size)
         # To do
 
     def initialize(self, num_agents: int) -> None:
         """
-
-        :param num_agents: int: 
+        Args:
+            num_agents (int):
 
         """
 

@@ -14,21 +14,8 @@ General simulation pipeline, suitable for all experiments
 
 
 class Simulation:
-    """This class represents the simulation of agents in a virtual space.
-    
-    Methods:
-    :method __init__:
-    :method CovidPlot:
-    :method FlockPlot:
-    :method AggregationPlot:
-    :method plot_simulation:
-    :method display:
-    :method update:
-    :method initialize:
-    :method simulate:
-    :method run:
-
-
+    """
+    This class represents the simulation of agents in a virtual space.
     """
 
     def __init__(
@@ -38,11 +25,12 @@ class Simulation:
             swarm_type: str,
             iterations: int):
         """
-        This initializer method of the class Simulation.
-        :param num_agents:
-        :param screen_size:
-        :param swarm_type:
-        :param iterations:
+        Args:
+        ----
+            num_agents (int):
+            screen_size (Union[Tuple[int, int], int]):
+            swarm_type (str):
+            iterations (int):
         """
         # general settings
         self.screensize = screen_size
@@ -73,8 +61,11 @@ class Simulation:
 
     def CovidPlot(self, data) -> None:
         """
+        Plot the data related to the covid experiment. The plot is based on the number of Susceptible, Infected and Recovered agents
 
-        :param data: 
+        Args:
+        ----
+            data:
 
         """
         output_name = "experiments/covid/plots/Covid-19-SIR%s.png" % time.strftime(
@@ -92,15 +83,15 @@ class Simulation:
         plt.show()
 
     def FlockPlot(self) -> None:
-        """ """
+        """Plot the data related to the flocking experiment. TODO"""
         pass
 
     def AggregationPlot(self) -> None:
-        """ """
+        """Plot the data related to the aggregation experiment. TODO"""
         pass
 
     def plot_simulation(self) -> None:
-        """ """
+        """Depending on the type of experiment, plots the final data accordingly"""
         if self.swarm_type == "Covid":
             self.CovidPlot(self.swarm.points_to_plot)
 
@@ -110,29 +101,14 @@ class Simulation:
         elif self.swarm_type == "Aggregation":
             self.AggregationPlot()
 
-    # def display(self):
-    #     """ """
-    #     for sprite in self.to_display:
-    #         sprite.display(self.screen)
-    #
-    # def update(self):
-    #     """ """
-    #     self.to_update.update()
-
     def initialize(self) -> None:
-        """ """
+        """Initialize the swarm, specifying the number of agents to be generated"""
 
         # initialize a swarm type specific environment
         self.swarm.initialize(self.num_agents)
 
-        # add all agents/objects to the update
-        # self.to_update = pygame.sprite.Group(self.swarm)
-
-        # add all agents/objects to display
-        # self.to_display = pygame.sprite.Group(self.to_update)
-
     def simulate(self) -> None:
-        """ """
+        """Here each frame is computed and displayed"""
         self.screen.fill(self.sim_background)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -141,12 +117,14 @@ class Simulation:
         self.swarm.update()
         self.swarm.display(self.screen)
 
-        # self.update()
-        # self.display()
         pygame.display.flip()
 
     def run(self) -> None:
-        """ """
+        """
+        Main cycle where the initialization and the frame-by-frame computation is performed.
+        The iteration con be infinite if the parameter iter was set to -1, or with a finite number of frames (according to iter)
+        When the GUI is closed, the resulting data is plotted according to the type of the experiment.
+        """
         # initialize the environment and agent/obstacle positions
         self.initialize()
         # the simulation loop, infinite until the user exists the simulation
@@ -157,11 +135,8 @@ class Simulation:
             while self.running:
                 init = time.time()
                 self.simulate()
-                print(time.time() - init)
-                # for event in pygame.event.get():
-                #     if event.type == pygame.QUIT:
-                #         The event is pushing the x button, not ctrl-c.
-                        # self.running = False
+                # print(time.time() - init)
+
             self.plot_simulation()
         else:
             for i in range(self.iter):

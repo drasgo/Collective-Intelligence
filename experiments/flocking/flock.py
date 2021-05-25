@@ -1,23 +1,35 @@
+from typing import Tuple
+
 import numpy as np
 from experiments.flocking.boid import Boid
 from experiments.flocking import parameters as p
+from simulation.agent import Agent
 from simulation.swarm import Swarm
 from simulation import helperfunctions
 
-"""
-Specific flock properties, and flocking environment definition 
-"""
-
 
 class Flock(Swarm):  # also access methods from the super class Swarm
-    """ """
+    """
+    Specific flock properties, and flocking environment definition. This class inherits from the base class Swarm.
+    It collects every element (agents, sites, and obstacles) of the simulation, and is in charge of commanding each agent
+    to update its state, and display the new states frame by frame
+
+    Attributes:
+        object_loc
+
+    """
     def __init__(self, screen_size) -> None:
+        """
+        This function is the initializer of the class Flock.
+        :param screen_size:
+        """
         super(Flock, self).__init__(screen_size)
         self.object_loc = p.OUTSIDE
 
     def initialize(self, num_agents: int) -> None:
         """
-
+        Initialize the whole swarm, creating and adding the obstacle objects, and the agent, placing them inside of the
+        screen and avoiding the obstacles.
         :param num_agents: int:
 
         """
@@ -38,7 +50,7 @@ class Flock(Swarm):  # also access methods from the super class Swarm
             )
 
             self.objects.add_object(
-                file=filename, pos=object_loc, scale=scale, type="obstacle"
+                file=filename, pos=object_loc, scale=scale, obj_type="obstacle"
             )
 
             min_x, max_x = helperfunctions.area(object_loc[0], scale[0])
@@ -67,52 +79,11 @@ class Flock(Swarm):  # also access methods from the super class Swarm
 
             self.add_agent(Boid(pos=np.array(coordinates), v=None, flock=self, index=index))
 
-    # def find_neighbor_velocity(self, neighbors):
-    #     """
-    #
-    #     :param neighbors:
-    #
-    #     """
-    #     neighbor_sum_v = np.zeros(2)
-    #     for idx in neighbors:
-    #         neighbor_sum_v += list(self.agents)[idx].v
-    #     return neighbor_sum_v / len(neighbors)
-    #
-    # def find_neighbor_center(self, neighbors):
-    #     """
-    #
-    #     :param neighbors:
-    #
-    #     """
-    #     neighbor_sum_pos = np.zeros(2)
-    #     for idx in neighbors:
-    #         neighbor_sum_pos += list(self.agents)[idx].pos
-    #     return neighbor_sum_pos / len(neighbors)
-    #
-    # def find_neighbor_separation(self, boid, neighbors):  # show what works better
-    #     """
-    #
-    #     :param boid:
-    #     :param neighbors:
-    #
-    #     """
-    #     separate = np.zeros(2)
-    #     for idx in neighbors:
-    #         neighbor_pos = list(self.agents)[idx].pos
-    #         difference = (
-    #             boid.pos - neighbor_pos
-    #         )  # compute the distance vector (v_x, v_y)
-    #         difference /= helperfunctions.norm(
-    #             difference
-    #         )  # normalize to unit vector with respect to its maginiture
-    #         separate += difference  # add the influences of all neighbors up
-    #     return separate / len(neighbors)
-
-    def find_neighbor_velocity_center_separation(self, boid, neighbors):
+    def find_neighbor_velocity_center_separation(self, boid: Agent, neighbors: list) -> Tuple[float, float, float]:
         """
-
-        :param boid: 
-        :param neighbors: 
+        Compute the total averaged sum of the neighbors' velocity, position and distance with regards to the considered agent
+        :param boid: Agent
+        :param neighbors: list
 
         """
         neighbor_sum_v, neighbor_sum_pos, separate = (
@@ -122,8 +93,6 @@ class Flock(Swarm):  # also access methods from the super class Swarm
         )
 
         for neigh in neighbors:
-            # print(neighbors)
-            # neigh = self.agents[idx]
             neighbor_sum_v += neigh.v
             neighbor_sum_pos += neigh.pos
             difference = (

@@ -1,5 +1,6 @@
+import numpy
 import numpy as np
-from typing import List
+from typing import List, Union
 
 import math
 import random
@@ -13,25 +14,28 @@ Useful vector transformation functions, and other to make the code more clear
 
 def area(a, b: float):
     """
-
-    :param a: object mid point
-    :param b: scale
-    :param b: float: 
+    Args:
+    ----
+        a: object mid point
+        b (float):
 
     """
     if b < a:
-        max = a + 0.5 * b
-        min = a - 0.5 * b
+        max_val = a + 0.5 * b
+        min_val = a - 0.5 * b
     else:
-        max = a + 0.25 * b
-        min = a - 0.25 * b
-    return min, max
+        max_val = a + 0.25 * b
+        min_val = a - 0.25 * b
+    return min_val, max_val
 
 
 def generate_coordinates(screensize) -> List[float]:
     """
+    Generate random coordinates given the screensize
 
-    :param screensize: 
+    Args:
+    ----
+        screensize:
 
     """
     return [
@@ -40,22 +44,28 @@ def generate_coordinates(screensize) -> List[float]:
     ]
 
 
-def dist(a, b) -> float:
-    """return the distance between two vectors
+def dist(a: np.ndarray, b: np.ndarray) -> float:
+    """
+    Return the euclidean distance between two vectors
 
-    :param a: np.array
-    :param b: np.array
+    Args:
+    ----
+        a (np.ndarray):
+        b (np.ndarray):
 
     """
     return norm(a - b)
 
 
-def image_with_rect(filename, scale: Mapping[int, Any]) -> Tuple[Any, Any]:
+def image_with_rect(filename: str, scale: Union[Mapping[int, Any], List[int]]) -> Tuple[Union[pygame.Surface, pygame.SurfaceType],
+                                                                 Union[pygame.Rect, Any]]:
     """
+    Load the image that is going to represent the agent on the GUI
 
-    :param filename: param scale:
-    :param scale: Mapping[int: 
-    :param Any]: 
+    Args:
+    ----
+        filename (str):
+        scale (Mapping[int: Any]):
 
     """
     _image = pygame.image.load(filename)
@@ -63,28 +73,31 @@ def image_with_rect(filename, scale: Mapping[int, Any]) -> Tuple[Any, Any]:
     return _image, _image.get_rect()
 
 
-def randrange(a, b) -> Any:
-    """Random number between a and b.
+def randrange(a: float, b: float) -> float:
+    """
+    Random number between a and b.
 
-    :param a: param b:
-    :param b: 
+    Args:
+    ----
+        a (float):
+        b (float):
 
     """
     return a + np.random.random() * (b - a)
 
 
 def plusminus() -> int:
-    """ """
-    # random 1 or -1
+    """Returns randomly either 1 or -1"""
     return 1 if (random.random() > 0.5) else -1
 
 
-def rotate(vector: Mapping[int, Any]) -> Any:
+def rotate(vector: numpy.ndarray) -> numpy.ndarray:
     """
+    Randomly rotate the input vector
 
-    :param vector: 
-    :param vector: Mapping[int: 
-    :param Any]: 
+    Args:
+    ----
+        vector (numpy.ndarray):
 
     """
     new_vector = np.zeros(2)
@@ -96,12 +109,12 @@ def rotate(vector: Mapping[int, Any]) -> Any:
     return new_vector
 
 
-def normalize(vector) -> Any:
+def normalize(vector: np.ndarray) -> numpy.ndarray:
     """Function to normalize a vector
-    ----------
-    param vector : np.array
 
-    :param vector: 
+    Args:
+    -----
+        vector (np.array):
 
     """
     n = norm(vector)
@@ -111,12 +124,15 @@ def normalize(vector) -> Any:
         return np.array(vector) / n
 
 
-def truncate(vector, max_length, min_lenght=None) -> Any:
-    """Truncate the length of a vector to a maximum/minimum value.
+def truncate(vector: numpy.ndarray, max_length: float, min_lenght: float=None) -> numpy.ndarray:
+    """
+    Truncate the length of a vector to a maximum/minimum value.
 
-    :param vector: param max_length:
-    :param min_lenght: Default value = None)
-    :param max_length: 
+    Args:
+    ----
+    vector (numpy.ndarray):
+    min_lenght (float): Defaults to None
+    max_length (float):
 
     """
     n = norm(vector)
@@ -128,19 +144,23 @@ def truncate(vector, max_length, min_lenght=None) -> Any:
         return vector
 
 
-def norm(vector) -> float:
-    """Compute the norm of a vector.
+def norm(vector: numpy.ndarray) -> float:
+    """
+    Compute the norm of a vector.
 
-    :param vector: 
+    Args:
+        vector (numpy.ndarray):
 
     """
     return math.sqrt(vector[0] ** 2 + vector[1] ** 2)
 
 
-def speedvector(max_speed) -> List[int]:
+def speedvector(max_speed: int) -> List[int]:
     """
+    Return a random speed vector
 
-    :param max_speed: 
+    Args:
+        max_speed (int):
 
     """
     return [
@@ -149,11 +169,11 @@ def speedvector(max_speed) -> List[int]:
     ]
 
 
-def relative(u, v) -> List[int]:
+def relative(u: numpy.ndarray, v: numpy.ndarray) -> List[int]:
     """
-
-    :param u: param v:
-    :param v: 
+    Args:
+        u (numpy.ndarray):
+        v (numpy.ndarray):
 
     """
     return [int(u[i]) - int(v[i]) for i in range(len(u))]
