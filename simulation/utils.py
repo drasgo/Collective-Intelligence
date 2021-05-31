@@ -1,11 +1,10 @@
-import numpy
-import numpy as np
-from typing import List, Union
-
 import math
 import random
+
+import numpy as np
 import pygame
-from typing import Any, Mapping, Tuple
+
+from typing import Any, List, Mapping, Tuple, Union
 
 """
 Useful vector transformation functions, and other to make the code more clear 
@@ -57,8 +56,8 @@ def dist(a: np.ndarray, b: np.ndarray) -> float:
     return norm(a - b)
 
 
-def image_with_rect(filename: str, scale: Union[Mapping[int, Any], List[int]]) -> Tuple[Union[pygame.Surface, pygame.SurfaceType],
-                                                                 Union[pygame.Rect, Any]]:
+def image_with_rect(filename: str, scale: Union[Mapping[int, Any], List[int]]) ->\
+        Tuple[Union[pygame.Surface, pygame.SurfaceType], Union[pygame.Rect, Any]]:
     """
     Load the image that is going to represent the agent on the GUI
 
@@ -91,7 +90,7 @@ def plusminus() -> int:
     return 1 if (random.random() > 0.5) else -1
 
 
-def rotate(vector: numpy.ndarray) -> numpy.ndarray:
+def rotate(vector: np.ndarray) -> np.ndarray:
     """
     Randomly rotate the input vector
 
@@ -109,7 +108,7 @@ def rotate(vector: numpy.ndarray) -> numpy.ndarray:
     return new_vector
 
 
-def normalize(vector: np.ndarray) -> numpy.ndarray:
+def normalize(vector: np.ndarray) -> np.ndarray:
     """Function to normalize a vector
 
     Args:
@@ -124,7 +123,7 @@ def normalize(vector: np.ndarray) -> numpy.ndarray:
         return np.array(vector) / n
 
 
-def truncate(vector: numpy.ndarray, max_length: float, min_lenght: float=None) -> numpy.ndarray:
+def truncate(vector: np.ndarray, max_length: float, min_length: float = None) -> np.ndarray:
     """
     Truncate the length of a vector to a maximum/minimum value.
 
@@ -138,13 +137,13 @@ def truncate(vector: numpy.ndarray, max_length: float, min_lenght: float=None) -
     n = norm(vector)
     if n > max_length:
         return normalize(vector) * max_length
-    elif min_lenght is not None and n < min_lenght:
-        return normalize(vector) * min_lenght
+    elif min_length is not None and n < min_length:
+        return normalize(vector) * min_length
     else:
         return vector
 
 
-def norm(vector: numpy.ndarray) -> float:
+def norm(vector: np.ndarray) -> float:
     """
     Compute the norm of a vector.
 
@@ -169,7 +168,7 @@ def speedvector(max_speed: int) -> List[int]:
     ]
 
 
-def relative(u: numpy.ndarray, v: numpy.ndarray) -> List[int]:
+def relative(u: np.ndarray, v: np.ndarray) -> List[int]:
     """
     Args:
         u (numpy.ndarray):
