@@ -1,12 +1,13 @@
 import pygame
 
 from simulation.agent import Agent
-from simulation.helperfunctions import dist
 from simulation.objects import Objects
+from simulation.utils import dist
 
 """
 General swarm class that defines general swarm properties, which are common across different swarm types
 """
+
 
 class Swarm(pygame.sprite.Sprite):
     """
@@ -24,6 +25,7 @@ class Swarm(pygame.sprite.Sprite):
          datapoints:
 
     """
+
     def __init__(self, screen_size, plot=None) -> None:
         """
         Args:
@@ -134,7 +136,8 @@ class Swarm(pygame.sprite.Sprite):
 
     def display(self, screen: pygame.Surface) -> None:
         """
-        Display the updated agents and objects for the next frame, and reset the temporary dictionary for finding the neighbors
+        Display the updated agents and objects for the next frame, and reset the temporary dictionary for finding
+        the neighbors
 
         Args:
         ----

@@ -1,14 +1,16 @@
+import random
+
 import numpy as np
+import pygame
+
 from typing import List
 
-import random
-import pygame
-from simulation import helperfunctions
-
+from simulation.utils import *
 
 """
 General agent properties, which are common across all types of agents 
 """
+
 
 # defines general agent properties
 class Agent(pygame.sprite.Sprite):  # super class
@@ -36,27 +38,29 @@ class Agent(pygame.sprite.Sprite):  # super class
         dT:
         type:
      """
+    base_image = None
+    base_rect = None
 
     def __init__(
-        self,
-        pos=None,
-        v=None,
-        image=None,
-        color=None,
-        max_speed=None,
-        min_speed=None,
-        mass=None,
-        width=None,
-        height=None,
-        dT=None,
-        index: int=None
+            self,
+            pos=None,
+            v=None,
+            image: str = None,
+            color=None,
+            max_speed=None,
+            min_speed=None,
+            mass=None,
+            width=None,
+            height=None,
+            dT=None,
+            index: int = None
     ) -> None:
         """
         Args:
         ---------
             pos : Defaults to None
             v: Defaults to None
-            image: Defaults to None
+            image (str): Defaults to None
             color: Defaults to None
             max_speed: Defaults to None
             min_speed: Defaults to None
@@ -67,13 +71,16 @@ class Agent(pygame.sprite.Sprite):  # super class
             index (int):Defaults to None
         """
         super(Agent, self).__init__()
+        self.angle = None
         self.index = index
         self.image_file = image
         if self.image_file is not None:  # load image from file
-            self.base_image, self.rect = helperfunctions.image_with_rect(
-                self.image_file, [width, height]
-            )
-            self.image = self.base_image
+            if not Agent.base_image:
+                Agent.base_image, Agent.rect = image_with_rect(
+                    self.image_file, [width, height]
+                )
+            self.rect = Agent.rect
+            self.image = Agent.base_image
             self.mask = pygame.mask.from_surface(self.image)
             self.mask = self.mask.scale((12, 10))
 
@@ -86,7 +93,7 @@ class Agent(pygame.sprite.Sprite):  # super class
         self.mass = mass
         self.max_speed = max_speed
         self.min_speed = min_speed
-        self.wandering_angle = helperfunctions.randrange(
+        self.wandering_angle = randrange(
             -np.pi, np.pi
         )  # set a random wandering angle
 
@@ -144,17 +151,21 @@ class Agent(pygame.sprite.Sprite):  # super class
             np.angle(self.v[0] + 1j * self.v[1])
         )  # using complex number to estimate the angle for rotation
 
-        self.image = pygame.transform.rotate(
-            self.base_image, angle
-        )  # rotates the image
-        self.rect = self.image.get_rect(center=self.rect.center)
+        if self.angle is None or np.abs(angle - self.angle) > 0.1:
+            del self.image
+            self.image = pygame.transform.rotate(
+                Agent.base_image, angle
+            )  # rotates the image
+            self.rect = self.image.get_rect(center=self.rect.center)
+
+        self.angle = angle
 
     def set_velocity(self) -> List[int]:
         """Determines a "random" velocity based on a random angle and x and y random speed components"""
         angle = np.pi * (2 * np.random.rand() - 1)
         velocity = [
-            random.randrange(1, self.max_speed + 1) * helperfunctions.plusminus(),
-            random.randrange(1, self.max_speed + 1) * helperfunctions.plusminus(),
+            random.randrange(1, self.max_speed + 1) * plusminus(),
+            random.randrange(1, self.max_speed + 1) * plusminus(),
         ]
         velocity *= np.array([np.cos(angle), np.sin(angle)])
         return velocity
@@ -173,7 +184,7 @@ class Agent(pygame.sprite.Sprite):  # super class
         rands = 2 * np.random.rand() - 1
         cos = np.cos(self.wandering_angle)
         sin = np.sin(self.wandering_angle)
-        n_v = helperfunctions.normalize(self.v)
+        n_v = normalize(self.v)
         circle_center = n_v * wander_dist
         displacement = np.dot(np.array([[cos, -sin], [sin, cos]]), n_v * wander_radius)
         wander_force = circle_center + displacement
@@ -187,14 +198,17 @@ class Agent(pygame.sprite.Sprite):  # super class
         moves the agent away from the boarder by distance equivalent to its size
         """
         # adjust the velocity by rotating it around
-        self.v = helperfunctions.rotate(
-            helperfunctions.normalize(self.v)
-        ) * helperfunctions.norm(self.v)
+        self.v = rotate(
+            normalize(self.v)
+        ) * norm(self.v)
         self.pos += self.v * 1.5
 
     def update(self) -> None:
-        """Update the agent's velocity and position with the previously calculated speed and steering, so it's ready for the next frame."""
-        self.v = helperfunctions.truncate(
+        """
+        Update the agent's velocity and position with the previously calculated speed and steering,
+        so it's ready for the next frame.
+        """
+        self.v = truncate(
             self.v + self.steering, self.max_speed, self.min_speed
         )
         self.pos += self.v * self.dT

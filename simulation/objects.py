@@ -1,6 +1,7 @@
-import pygame
 import numpy as np
-from simulation import helperfunctions
+import pygame
+
+from simulation.utils import image_with_rect
 
 
 class Objects(pygame.sprite.Sprite):
@@ -48,7 +49,8 @@ class Object(pygame.sprite.Sprite):
         mask:
         pos:
     """
-    def __init__(self, filename: str=None, pos: np.ndarray=None, scale=None) -> None:
+
+    def __init__(self, filename: str = None, pos: np.ndarray = None, scale=None) -> None:
         """
         Arguments:
         ---------
@@ -57,7 +59,7 @@ class Object(pygame.sprite.Sprite):
             scale: Defaults to None
         """
         super(Object, self).__init__()
-        self.image, self.rect = helperfunctions.image_with_rect(filename, scale)
+        self.image, self.rect = image_with_rect(filename, scale)
         self.mask = pygame.mask.from_surface(self.image)
         self.pos: np.ndarray = pos if pos is not None else np.zeros(2)
         self.rect = self.image.get_rect(center=self.pos)

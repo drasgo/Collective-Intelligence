@@ -1,8 +1,9 @@
-import pygame
 import numpy as np
+import pygame
+
+from experiments.covid.config import config
 from simulation.agent import Agent
-from simulation import helperfunctions
-from experiments.covid import parameters as p
+from simulation.utils import *
 
 
 class Person(Agent):

@@ -1,11 +1,12 @@
-from simulation.swarm import Swarm
-from simulation import helperfunctions
+from experiments.covid.config import config
 from experiments.covid.person import Person
-from experiments.covid import parameters as p
+from simulation.swarm import Swarm
+from simulation.utils import *
 
 
 class Population(Swarm):
     """Class that represents the Population for the Covid experiment. TODO"""
+
     def __init__(self, screen_size) -> None:
         super(Population, self).__init__(screen_size)
         # To do
@@ -18,21 +19,20 @@ class Population(Swarm):
         """
 
         # To Do
-
         # code snipet (not complete) to avoid initializing agents on obstacles
         # given some coordinates and obstacles in the environment, this repositions the agent
-        coordinates = helperfunctions.generate_coordinates(self.screen)
+        coordinates = generate_coordinates(self.screen)
 
-        if p.OBSTACLES:  # you need to define this variable
-            for object in self.objects.obstacles:
-                rel_coordinate = helperfunctions.relative(
-                    coordinates, (object.rect[0], object.rect[1])
+        if config["population"]["obstacles"]:  # you need to define this variable
+            for obj in self.objects.obstacles:
+                rel_coordinate = relative(
+                    coordinates, (obj.rect[0], obj.rect[1])
                 )
                 try:
-                    while object.mask.get_at(rel_coordinate):
-                        coordinates = helperfunctions.generate_coordinates(self.screen)
-                        rel_coordinate = helperfunctions.relative(
-                            coordinates, (object.rect[0], object.rect[1])
+                    while obj.mask.get_at(rel_coordinate):
+                        coordinates = generate_coordinates(self.screen)
+                        rel_coordinate = relative(
+                            coordinates, (obj.rect[0], obj.rect[1])
                         )
                 except IndexError:
                     pass

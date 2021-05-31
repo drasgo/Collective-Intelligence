@@ -1,11 +1,11 @@
-import numpy
-import pygame
 import numpy as np
+import pygame
+
 from typing import Tuple
 
-from simulation import helperfunctions
 from simulation.agent import Agent
-from experiments.flocking import parameters as p
+from simulation.utils import normalize, truncate
+from experiments.flocking.config import config
 
 """
 Specific boid properties and helperfunctions 
@@ -26,8 +26,9 @@ class Boid(Agent):
         pos:
 
     """
+
     def __init__(
-        self, pos, v, flock, index: int, image: str="experiments/flocking/images/normal-boid.png"
+            self, pos, v, flock, index: int, image: str = "experiments/flocking/images/normal-boid.png"
     ) -> None:
         """
         Args:
@@ -42,12 +43,12 @@ class Boid(Agent):
             pos,
             v,
             image,
-            max_speed=p.MAX_SPEED,
-            min_speed=p.MIN_SPEED,
-            mass=p.MASS,
-            width=p.WIDTH,
-            height=p.HEIGHT,
-            dT=p.dT,
+            max_speed=config["agent"]["max_speed"],
+            min_speed=config["agent"]["min_speed"],
+            mass=config["agent"]["mass"],
+            width=config["agent"]["width"],
+            height=config["agent"]["height"],
+            dT=config["agent"]["dt"],
             index=index
         )
 
@@ -71,26 +72,27 @@ class Boid(Agent):
 
         # combine the vectors in one
         steering_force = (
-            align_force * p.ALIGNMENT_WEIGHT
-            + cohesion_force * p.COHESION_WEIGHT
-            + separate_force * p.SEPARATION_WEIGHT
+                align_force * config["boid"]["alignment_weight"]
+                + cohesion_force * config["boid"]["cohesion_weight"]
+                + separate_force * config["boid"]["separation_weight"]
         )
 
         # adjust the direction of the boid
-        self.steering += helperfunctions.truncate(
-            steering_force / self.mass, p.MAX_FORCE
+        self.steering += truncate(
+            steering_force / self.mass, config["boid"]["max_force"]
         )
 
-    def neighbor_forces(self) -> Tuple[numpy.ndarray, numpy.ndarray, numpy.ndarray]:
+    def neighbor_forces(self) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
         """
         Find the neighbors of the agent and compute the total align force (force required to align agent with its neighbors'
         total force), cohesion force (force required to move the agent towards the center of mass of its neighbors)
         and separate force considering the total amount of neighbors close to the agent
         """
         # find all the neighbors of a boid based on its radius view
-        neighbors = self.flock.find_neighbors(self, p.RADIUS_VIEW)
+        neighbors = self.flock.find_neighbors(self, config["boid"]["radius_view"])
 
-        pre_align_force, pre_cohesion_force, separate_force = self.flock.find_neighbor_velocity_center_separation(self, neighbors)
+        pre_align_force, pre_cohesion_force, separate_force = self.flock.find_neighbor_velocity_center_separation(self,
+                                                                                                                  neighbors)
         #
         # if there are neighbors, estimate the influence of their forces
         if neighbors:
@@ -99,9 +101,9 @@ class Boid(Agent):
         #
         else:
             align_force, cohesion_force = (
-            np.zeros(2),
-            np.zeros(2),
-        )
+                np.zeros(2),
+                np.zeros(2),
+            )
         return align_force, cohesion_force, separate_force
 
     def align(self, neighbor_force: np.ndarray):
@@ -112,7 +114,7 @@ class Boid(Agent):
             neighbor_force (np.ndarray):
 
         """
-        return helperfunctions.normalize(neighbor_force - self.v)
+        return normalize(neighbor_force - self.v)
 
     def cohesion(self, neighbor_center):
         """
@@ -124,4 +126,4 @@ class Boid(Agent):
 
         """
         force = neighbor_center - self.pos
-        return helperfunctions.normalize(force - self.v)
+        return normalize(force - self.v)

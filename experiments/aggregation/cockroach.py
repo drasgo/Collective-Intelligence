@@ -1,6 +1,6 @@
-from simulation import helperfunctions
+from experiments.aggregation.config import config
 from simulation.agent import Agent
-from experiments.aggregation import parameters as p
+from simulation.utils import *
 
 
 class Cockroach(Agent):

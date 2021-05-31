@@ -1,18 +1,20 @@
+import numpy as np
+
+
 from typing import Tuple
 
-import numpy as np
 from experiments.flocking.boid import Boid
-from experiments.flocking import parameters as p
+from experiments.flocking.config import config
 from simulation.agent import Agent
 from simulation.swarm import Swarm
-from simulation import helperfunctions
+from simulation.utils import area, generate_coordinates, norm
 
 
 class Flock(Swarm):  # also access methods from the super class Swarm
     """
     Specific flock properties, and flocking environment definition. This class inherits from the base class Swarm.
-    It collects every element (agents, sites, and obstacles) of the simulation, and is in charge of commanding each agent
-    to update its state, and display the new states frame by frame
+    It collects every element (agents, sites, and obstacles) of the simulation, and is in charge of commanding each
+    agent to update its state, and display the new states frame by frame
 
     Attributes:
         object_loc
@@ -24,7 +26,7 @@ class Flock(Swarm):  # also access methods from the super class Swarm
         :param screen_size:
         """
         super(Flock, self).__init__(screen_size)
-        self.object_loc = p.OUTSIDE
+        self.object_loc = config["flock"]["outside"]
 
     def initialize(self, num_agents: int) -> None:
         """
@@ -35,17 +37,17 @@ class Flock(Swarm):  # also access methods from the super class Swarm
         """
 
         # add obstacle/-s to the environment if present
-        if p.OBSTACLES:
-            object_loc = p.OBJECT_LOC
+        if config["flock"]["obstacles"]:
+            object_loc = config["base"]["object_location"]
 
-            if p.OUTSIDE:
+            if config["flock"]["outside"]:
                 scale = [300, 300]
             else:
                 scale = [800, 800]
 
             filename = (
                 "experiments/flocking/images/convex.png"
-                if p.CONVEX
+                if config["flock"]["convex"]
                 else "experiments/flocking/images/redd.png"
             )
 
@@ -53,21 +55,21 @@ class Flock(Swarm):  # also access methods from the super class Swarm
                 file=filename, pos=object_loc, scale=scale, obj_type="obstacle"
             )
 
-            min_x, max_x = helperfunctions.area(object_loc[0], scale[0])
-            min_y, max_y = helperfunctions.area(object_loc[1], scale[1])
+            min_x, max_x = area(object_loc[0], scale[0])
+            min_y, max_y = area(object_loc[1], scale[1])
 
         # add agents to the environment
         for index, agent in enumerate(range(num_agents)):
-            coordinates = helperfunctions.generate_coordinates(self.screen)
+            coordinates = generate_coordinates(self.screen)
 
             # if obstacles present re-estimate the corrdinates
-            if p.OBSTACLES:
-                if p.OUTSIDE:
+            if config["flock"]["obstacles"]:
+                if config["flock"]["outside"]:
                     while (
                             max_x >= coordinates[0] >= min_x
                             and max_y >= coordinates[1] >= min_y
                     ):
-                        coordinates = helperfunctions.generate_coordinates(self.screen)
+                        coordinates = generate_coordinates(self.screen)
                 else:
                     while (
                         coordinates[0] >= max_x
@@ -75,13 +77,14 @@ class Flock(Swarm):  # also access methods from the super class Swarm
                         or coordinates[1] >= max_y
                         or coordinates[1] <= min_y
                     ):
-                        coordinates = helperfunctions.generate_coordinates(self.screen)
+                        coordinates = generate_coordinates(self.screen)
 
             self.add_agent(Boid(pos=np.array(coordinates), v=None, flock=self, index=index))
 
     def find_neighbor_velocity_center_separation(self, boid: Agent, neighbors: list) -> Tuple[float, float, float]:
         """
-        Compute the total averaged sum of the neighbors' velocity, position and distance with regards to the considered agent
+        Compute the total averaged sum of the neighbors' velocity, position and distance with regards to the considered
+        agent
         :param boid: Agent
         :param neighbors: list
 
@@ -98,7 +101,7 @@ class Flock(Swarm):  # also access methods from the super class Swarm
             difference = (
                     boid.pos - neigh.pos
             )  # compute the distance vector (v_x, v_y)
-            difference /= helperfunctions.norm(
+            difference /= norm(
                 difference
             )  # normalize to unit vector with respect to its maginiture
             separate += difference  # add the influences of all neighbors up
