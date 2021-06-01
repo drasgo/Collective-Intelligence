@@ -50,8 +50,8 @@ class Agent(pygame.sprite.Sprite):  # super class
             max_speed=None,
             min_speed=None,
             mass=None,
-            width=None,
-            height=None,
+            width: int=None,
+            height: int=None,
             dT=None,
             index: int = None
     ) -> None:

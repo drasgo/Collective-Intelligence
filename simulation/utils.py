@@ -168,11 +168,11 @@ def speedvector(max_speed: int) -> List[int]:
     ]
 
 
-def relative(u: np.ndarray, v: np.ndarray) -> List[int]:
+def relative(u: Union[np.ndarray, List[Union[float, int]]], v: Union[np.ndarray, List[Union[float, int]]]) -> List[int]:
     """
     Args:
-        u (numpy.ndarray):
-        v (numpy.ndarray):
+        u (Union[np.ndarray, List[Union[float, int]]]):
+        v (Union[np.ndarray, List[Union[float, int]]]):
 
     """
     return [int(u[i]) - int(v[i]) for i in range(len(u))]

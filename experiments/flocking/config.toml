@@ -10,7 +10,7 @@ width  = 1000
 
 [flock]
 convex    = true
-obstacles = true
+obstacles = false
 outside   = false
 
 [boid]
@@ -19,9 +19,9 @@ max_force         = 8.0
 #view of neighbor agents
 radius_view       = 70
 #weights for velocity forces
-alignment_weight  = 4.5
-cohesion_weight   = 3.5
-separation_weight = 6.0
+alignment_weight  = 0.0
+cohesion_weight   = 0.0
+separation_weight = 0.0
 
 [agent]
 height    = 8
