@@ -3,7 +3,7 @@
 # Ignore Documentation folder
 html/
 
-
+*/__pycache__/
 venv/
 pyenv/
 
