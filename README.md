@@ -1,4 +1,4 @@
-# EmbodiedAI 2020
+# EmbodiedAI 2021
 This repository contains the practical materials for the Embodied Artificial Intelligence course.
 
 ## Installation
