@@ -141,9 +141,9 @@ class Simulation:
         if self.iter == float("inf"):
 
             while self.running:
-                init = time.time()
+                # init = time.time()
                 self.simulate()
-                print(time.time() - init)
+                # print(time.time() - init)
 
             self.plot_simulation()
         else:
