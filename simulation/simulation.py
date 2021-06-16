@@ -99,13 +99,11 @@ class Simulation:
 
     def plot_simulation(self) -> None:
         """Depending on the type of experiment, plots the final data accordingly"""
-        if self.swarm_type == "Covid":
+        if self.swarm_type == "covid":
             _plot_covid(self.swarm.points_to_plot)
-
-        elif self.swarm_type == "Flock":
+        elif self.swarm_type == "flock":
             _plot_flock()
-
-        elif self.swarm_type == "Aggregation":
+        elif self.swarm_type == "aggregation":
             _plot_aggregation()
 
     def initialize(self) -> None:
