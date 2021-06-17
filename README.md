@@ -14,44 +14,41 @@ If you want to auto generate the documentation, just run in the terminal in the 
     
     pdoc3 --html .
 
+_____
 
-## NOTE
+## Examples Assignment 0:
 
-There is a known bug that may (rarely) crash the program in random occasions when the number of agents is very high 
-(especially if your computer is not very performant), regarding the memory usage of pygame.
-When this bug appears, just waiting couple of seconds and re-running the program should
-fix it
+Inside obstacle:
+![Output sample](gifs/Assignment0/convex_inside.gif)
 
-We are actively working for fixing this. 
+Outside obstacle:
+![Output sample](gifs/Assignment0/convex_outside.gif)
 
+No obstacle:
+![Output sample](gifs/Assignment0/no_obstacle.gif)
+
+_____
 
 ## Examples Assignment 1: 
 
 About Stage 1:
-
 ![Output sample](gifs/Assignment1/demo_pt0.gif)
 
 
 About Experiment 1:
-
-
 ![alt text](gifs/Assignment1/demo_pt1.PNG)
 
 
 About Experiment 2:
-
-
 ![alt text](gifs/Assignment1/demo_pt2.png)
 
-
+_____
 
 ## Examples Assignment 2:
 
 SIR model:
-
 ![Output sample](gifs/Assignment2/covid.gif)
 
 Simplified lockdown:
-
 ![Output sample](gifs/Assignment2/covid1.gif)
 
