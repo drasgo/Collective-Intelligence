@@ -1,3 +1,5 @@
+from typing import Union, Mapping, Any, List
+
 import numpy as np
 import pygame
 
@@ -9,9 +11,8 @@ class Objects(pygame.sprite.Sprite):
     Object in charge of creating and storing every object (both obstacles and sites).
 
     Attributes:
-    ----------
-        obstacles:
-        sites:
+        obstacles: .
+        sites: .
     """
 
     def __init__(self) -> None:
@@ -19,14 +20,14 @@ class Objects(pygame.sprite.Sprite):
         self.obstacles = pygame.sprite.Group()
         self.sites = pygame.sprite.Group()
 
-    def add_object(self, file, pos, scale, obj_type) -> None:
+    def add_object(self, file: str, pos: np.ndarray, scale: Union[Mapping[int, Any], List[int]], obj_type: str) -> None:
         """
+        Add "obstacle" or "site" to the pool of objects.
         Args:
-        ----
-            file:
-            scale:
-            pos:
-            obj_type:
+            file (str): .
+            scale (Union[Mapping[int, Any], List[int]]): .
+            pos (np.ndarray): .
+            obj_type (str):  Either "obstacle" or "site"
 
         """
         if obj_type == "obstacle":
@@ -43,20 +44,22 @@ class Object(pygame.sprite.Sprite):
     as they are both static, nothing needs to be done but displaying the object every frame.
 
     Attributes:
-    ----------
-        image:
-        rect:
-        mask:
-        pos:
+        image: .
+        rect: .
+        mask: .
+        pos: .
     """
 
-    def __init__(self, filename: str = None, pos: np.ndarray = None, scale=None) -> None:
+    def __init__(
+            self,
+            filename: str = None,
+            pos: np.ndarray = None,
+            scale: Union[Mapping[int, Any], List[int]]=None) -> None:
         """
-        Arguments:
-        ---------
-            filename (str): Defaults to None
-            pos: (np.ndarray): Defaults to None
-            scale: Defaults to None
+        Args:
+            filename (str):  Defaults to None
+            pos:  (np.ndarray):  Defaults to None
+            scale (Union[Mapping[int, Any], List[int]]):  Defaults to None
         """
         super(Object, self).__init__()
         self.image, self.rect = image_with_rect(filename, scale)
@@ -69,8 +72,7 @@ class Object(pygame.sprite.Sprite):
         Display the object for the new frame.
 
         Args:
-        ----
-            screen:
+            screen: .
 
         """
         screen.blit(self.image, self.rect)

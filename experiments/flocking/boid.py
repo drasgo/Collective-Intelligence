@@ -18,22 +18,20 @@ class Boid(Agent):
     from the base class Agent.
 
     Attributes:
-    ----------
-        flock:
-        avoided_obstacles (bool):
+        flock: .
+        avoided_obstacles (bool): .
     """
 
     def __init__(
-            self, pos, v, flock, index: int, image: str = "experiments/flocking/images/normal-boid.png"
+            self, pos, v, flock, index:  int, image: str = "experiments/flocking/images/normal-boid.png"
     ) -> None:
         """
         Args:
-        ----
-            pos:
-            v:
-            flock:
-            index (int):
-            image (str): Defaults to "experiments/flocking/images/normal-boid.png"
+            pos: .
+            v: .
+            flock: .
+            index (int): .
+            image (str):  Defaults to "experiments/flocking/images/normal-boid.png"
         """
         super(Boid, self).__init__(
             pos,
@@ -128,18 +126,17 @@ class Boid(Agent):
         Function to align the agent in accordance to neighbor velocity
 
         Args:
-            neighbor_force (np.ndarray):
+            neighbor_force (np.ndarray): .
 
         """
         return normalize(neighbor_force - self.v)
 
-    def cohesion(self, neighbor_center):
+    def cohesion(self, neighbor_center: float):
         """
         Function to move the agent towards the center of mass of its neighbors
 
         Args:
-        ----
-            neighbor_center:
+            neighbor_center (float): .
 
         """
         force = neighbor_center - self.pos

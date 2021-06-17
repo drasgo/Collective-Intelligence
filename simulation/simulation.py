@@ -11,14 +11,18 @@ from experiments.covid.population import Population
 from experiments.flocking.flock import Flock
 
 
-def _plot_covid(data) -> None:
+def _plot_covid(data:  dict) -> None:
     """
     Plot the data related to the covid experiment. The plot is based on the number of Susceptible,
     Infected and Recovered agents
 
     Args:
-    ----
-        data:
+        data (dict):  dictionary containing the covid timepoints. The structure is the following:
+                    {
+                        "S": [time_point0, time_point1, ..],
+                        "I": [time_point0, time_point1, ..],
+                        "R": [time_point0, time_point1, ..]
+                    }
 
     """
     output_name = "experiments/covid/plots/Covid-19-SIR%s.png" % time.strftime(
@@ -64,11 +68,10 @@ class Simulation:
             iterations: int):
         """
         Args:
-        ----
-            num_agents (int):
-            screen_size (Union[Tuple[int, int], int]):
-            swarm_type (str):
-            iterations (int):
+            num_agents (int): .
+            screen_size (Union[Tuple[int, int], int]): .
+            swarm_type (str): .
+            iterations (int): .
         """
         # general settings
         self.screensize = screen_size

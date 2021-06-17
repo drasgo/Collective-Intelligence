@@ -17,13 +17,15 @@ class Flock(Swarm):  # also access methods from the super class Swarm
     agent to update its state, and display the new states frame by frame
 
     Attributes:
-        object_loc
+        object_loc: .
 
     """
     def __init__(self, screen_size) -> None:
         """
         This function is the initializer of the class Flock.
-        :param screen_size:
+
+        Args:
+            screen_size: .
         """
         super(Flock, self).__init__(screen_size)
         self.object_loc = config["flock"]["outside"]
@@ -32,10 +34,12 @@ class Flock(Swarm):  # also access methods from the super class Swarm
         """
         Initialize the whole swarm, creating and adding the obstacle objects, and the agent, placing them inside of the
         screen and avoiding the obstacles.
-        :param num_agents: int:
+
+        Args:
+            num_agents (int): .
 
         """
-
+        max_x, min_x, max_y, min_y = 0.0, 0.0, 0.0, 0.0
         # add obstacle/-s to the environment if present
         if config["flock"]["obstacles"]:
             object_loc = config["base"]["object_location"]
@@ -81,12 +85,14 @@ class Flock(Swarm):  # also access methods from the super class Swarm
 
             self.add_agent(Boid(pos=np.array(coordinates), v=None, flock=self, index=index))
 
-    def find_neighbor_velocity_center_separation(self, boid: Agent, neighbors: list) -> Tuple[float, float, float]:
+    def find_neighbor_velocity_center_separation(self, boid:  Agent, neighbors: list) -> Tuple[float, float, float]:
         """
         Compute the total averaged sum of the neighbors' velocity, position and distance with regards to the considered
         agent
-        :param boid: Agent
-        :param neighbors: list
+
+        Args:
+            boid (Agent): .
+            neighbors (list): .
 
         """
         neighbor_sum_v, neighbor_sum_pos, separate = (
@@ -107,4 +113,3 @@ class Flock(Swarm):  # also access methods from the super class Swarm
             separate += difference  # add the influences of all neighbors up
 
         return neighbor_sum_v / len(neighbors), neighbor_sum_pos / len(neighbors), separate / len(neighbors)
-

@@ -1,9 +1,5 @@
-import random
-
 import numpy as np
 import pygame
-
-from typing import List
 
 from simulation.utils import *
 
@@ -21,22 +17,20 @@ class Agent(pygame.sprite.Sprite):  # super class
     the class pygame.sprite.Sprite
 
     Attributes:
-    ----------
-        index:
-        image_file:
-        base_image:
-        rect:
-        image:
-        mask:
-        mass:
-        max_speed:
-        min_speed:
-        wandering_angle:
-        steering:
-        pos:
-        v:
-        dT:
-        type:
+        index: .
+        image_file: .
+        rect: .
+        image: .
+        mask: .
+        mass: .
+        max_speed: .
+        min_speed: .
+        wandering_angle: .
+        steering: .
+        pos: .
+        v: .
+        dT: .
+        type: .
      """
     base_image = None
     base_rect = None
@@ -57,18 +51,17 @@ class Agent(pygame.sprite.Sprite):  # super class
     ) -> None:
         """
         Args:
-        ---------
-            pos : Defaults to None
-            v: Defaults to None
-            image (str): Defaults to None
-            color: Defaults to None
-            max_speed: Defaults to None
-            min_speed: Defaults to None
-            mass: Defaults to None
-            width: Defaults to None
-            height: Defaults to None
-            dT: Defaults to None
-            index (int):Defaults to None
+            pos :  Defaults to None
+            v:  Defaults to None
+            image (str):  Defaults to None
+            color:  Defaults to None
+            max_speed:  Defaults to None
+            min_speed:  Defaults to None
+            mass:  Defaults to None
+            width:  Defaults to None
+            height:  Defaults to None
+            dT:  Defaults to None
+            index (int): Defaults to None
         """
         super(Agent, self).__init__()
         self.angle = None
@@ -114,8 +107,7 @@ class Agent(pygame.sprite.Sprite):  # super class
         Position setter for the current instance of Agent
 
         Args:
-        ---------
-            pos:
+            pos: .
 
         """
         self._pos = pos
@@ -134,8 +126,7 @@ class Agent(pygame.sprite.Sprite):  # super class
         Velocity setter for the current instance of Agent
 
         Args:
-        ---------
-            v (np.ndarray):
+            v (np.ndarray): .
 
         """
         self._v = v
@@ -176,10 +167,9 @@ class Agent(pygame.sprite.Sprite):  # super class
         (returned) wander force, based on the previous velocity, the wander distance and wander radius.
 
         Args:
-        ---------
-            wander_dist:
-            wander_angle:
-            wander_radius:
+            wander_dist: .
+            wander_angle: .
+            wander_radius: .
         """
         rands = 2 * np.random.rand() - 1
         cos = np.cos(self.wandering_angle)
@@ -218,8 +208,7 @@ class Agent(pygame.sprite.Sprite):  # super class
         Refresh the updated agent on the GUI for the next frame.
 
         Args:
-        ------
-            screen (pygame.Surface):
+            screen (pygame.Surface): .
 
         """
         screen.blit(self.image, self.rect)

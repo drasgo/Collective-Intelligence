@@ -1,3 +1,5 @@
+from typing import List
+
 import pygame
 
 from simulation.agent import Agent
@@ -16,21 +18,19 @@ class Swarm(pygame.sprite.Sprite):
     for each frame of the GUI, as it extends the base class pygame.sprite.Sprite
 
     Attributes:
-    ----------
-         dist_temp:
-         agents:
-         screen:
-         objects:
-         points_to_plot:
-         datapoints:
+         dist_temp: .
+         agents: .
+         screen: .
+         objects: .
+         points_to_plot: .
+         datapoints: .
 
     """
 
     def __init__(self, screen_size, plot=None) -> None:
         """
         Args:
-        ----
-            screen_size:
+            screen_size: .
             plot: Defaults to None
         """
         super(Swarm, self).__init__()
@@ -46,8 +46,7 @@ class Swarm(pygame.sprite.Sprite):
         Adds an agent to the pool of agents in the swarm
 
         Args:
-        ----
-            agent (Agent):
+            agent (Agent): .
 
         """
         self.agents.append(agent)
@@ -59,9 +58,8 @@ class Swarm(pygame.sprite.Sprite):
         not need to be recomputed for this frame.
 
         Args:
-        ----
-            a (Agent): Agent in question that is performing the check of its surroundings
-            b (Agent): Another of the swarm
+            a (Agent):  Agent in question that is performing the check of its surroundings
+            b (Agent):  Another agent of the swarm
 
         """
         indexes = (a.index, b.index)
@@ -77,9 +75,8 @@ class Swarm(pygame.sprite.Sprite):
         distance between the agent and any other member of the swarm
 
         Args:
-        ----
-            agent (Agent):
-            radius (float):
+            agent (Agent): .
+            radius (float): .
 
         """
         #  Check that the each other agent is not our considered one, if the type is None or infected, and the distance
@@ -103,13 +100,13 @@ class Swarm(pygame.sprite.Sprite):
             if agent.pos[1] > self.screen[1]:
                 agent.pos[1] = 0.0
 
-    def add_point(self, lst) -> None:
+    def add_point(self, lst: List[str]) -> None:
         """
-        Plots the number of infected and recovered
+        Plots the number of infected and recovered. NOTE: Used for the COVID experiment.
 
         Args:
-        ----
-            lst:
+            lst (List[str]):  list of values containing the (special) state of the agents (they can be either S, I, or R).
+                 Example:  ["S", "S", "S", "S", "S", "I", "I", "I", "I", "R", "R", "R"]
 
         """
         # Count current numbers
@@ -140,8 +137,7 @@ class Swarm(pygame.sprite.Sprite):
         the neighbors
 
         Args:
-        ----
-            screen (pygame.Surface):
+            screen (pygame.Surface): .
 
         """
         for obstacle in self.objects.obstacles:

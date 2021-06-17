@@ -14,9 +14,8 @@ Useful vector transformation functions, and other to make the code more clear
 def area(a, b: float):
     """
     Args:
-    ----
-        a: object mid point
-        b (float):
+        a:  object mid point
+        b (float): .
 
     """
     if b < a:
@@ -33,8 +32,7 @@ def generate_coordinates(screensize) -> List[float]:
     Generate random coordinates given the screensize
 
     Args:
-    ----
-        screensize:
+        screensize: .
 
     """
     return [
@@ -48,9 +46,8 @@ def dist(a: np.ndarray, b: np.ndarray) -> float:
     Return the euclidean distance between two vectors
 
     Args:
-    ----
-        a (np.ndarray):
-        b (np.ndarray):
+        a (np.ndarray): .
+        b (np.ndarray): .
 
     """
     return norm(a - b)
@@ -62,9 +59,8 @@ def image_with_rect(filename: str, scale: Union[Mapping[int, Any], List[int]]) -
     Load the image that is going to represent the agent on the GUI
 
     Args:
-    ----
-        filename (str):
-        scale (Mapping[int: Any]):
+        filename (str): .
+        scale (Union[Mapping[int, Any], List[int]]): .
 
     """
     _image = pygame.image.load(filename)
@@ -77,9 +73,8 @@ def randrange(a: float, b: float) -> float:
     Random number between a and b.
 
     Args:
-    ----
-        a (float):
-        b (float):
+        a (float): .
+        b (float): .
 
     """
     return a + np.random.random() * (b - a)
@@ -95,10 +90,9 @@ def rotate(vector: np.ndarray, lower_angle: int=150, upper_angle: int=210) -> np
     Randomly rotate the input vector
 
     Args:
-    ----
-        vector (numpy.ndarray):
-        lower_angle (int): Defaults to 150
-        upper_angle (int): Defaults to 210
+        vector (numpy.ndarray): .
+        lower_angle (int):  Defaults to 150
+        upper_angle (int):  Defaults to 210
 
     """
     new_vector = np.zeros(2)
@@ -114,8 +108,7 @@ def normalize(vector: np.ndarray) -> np.ndarray:
     """Function to normalize a vector
 
     Args:
-    -----
-        vector (np.array):
+        vector (np.array): .
 
     """
     n = norm(vector)
@@ -130,10 +123,9 @@ def truncate(vector: np.ndarray, max_length: float, min_length: float = None) ->
     Truncate the length of a vector to a maximum/minimum value.
 
     Args:
-    ----
-    vector (numpy.ndarray):
-    min_lenght (float): Defaults to None
-    max_length (float):
+        vector (numpy.ndarray): .
+        min_length (float):  Defaults to None
+        max_length (float): .
 
     """
     n = norm(vector)
@@ -150,7 +142,7 @@ def norm(vector: np.ndarray) -> float:
     Compute the norm of a vector.
 
     Args:
-        vector (numpy.ndarray):
+        vector (numpy.ndarray): .
 
     """
     return math.sqrt(vector[0] ** 2 + vector[1] ** 2)
@@ -161,7 +153,7 @@ def speedvector(max_speed: int) -> List[int]:
     Return a random speed vector
 
     Args:
-        max_speed (int):
+        max_speed (int): .
 
     """
     return [
@@ -173,8 +165,8 @@ def speedvector(max_speed: int) -> List[int]:
 def relative(u: Union[np.ndarray, List[Union[float, int]]], v: Union[np.ndarray, List[Union[float, int]]]) -> List[int]:
     """
     Args:
-        u (Union[np.ndarray, List[Union[float, int]]]):
-        v (Union[np.ndarray, List[Union[float, int]]]):
+        u (Union[np.ndarray, List[Union[float, int]]]): .
+        v (Union[np.ndarray, List[Union[float, int]]]): .
 
     """
     return [int(u[i]) - int(v[i]) for i in range(len(u))]
